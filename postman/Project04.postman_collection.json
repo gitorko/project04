@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "83c68f99-b31a-40c8-b0b6-7ecfa4f81f54",
+		"name": "Project04",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4185850"
+	},
+	"item": [
+		{
+			"name": "Ignite Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run Job",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/run-job/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"run-job",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run Job - Node1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/run-job/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"run-job",
+						"20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run Job - Node2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/run-job/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"run-job",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run Job - Node3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/run-job/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"run-job",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
