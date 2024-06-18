@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: project04
+spec:
+  selector:
+      matchLabels:
+        app: project04
+  serviceName: "project04"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: project04
+    spec:
+      containers:
+        - name: project04
+          image: project04:1.0.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ignite.nodeName
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: 47100 # communication SPI port
+            - containerPort: 47500 # discovery SPI port
+            - containerPort: 49112 # dafault JMX port
+            - containerPort: 10800 # thin clients/JDBC driver port
+            - containerPort: 8080 # REST API
+          volumeMounts:
+            - mountPath: /ignite/data
+              name: ignite
+          resources:
+            limits:
+              cpu: "1"
+              memory: "500Mi"
+      volumes:
+        - name: ignite
+          persistentVolumeClaim:
+            claimName: ignite-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ignite-pv-volume
+  labels:
+    type: local
+    app: project04
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/tmp/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ignite-pv-claim
+  labels:
+    app: project04
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: project04
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+  selector:
+    app: project04
+  type: LoadBalancer

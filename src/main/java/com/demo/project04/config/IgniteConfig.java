@@ -12,6 +12,7 @@ import org.apache.ignite.configuration.DataPageEvictionMode;
 import org.apache.ignite.configuration.DataRegionConfiguration;
 import org.apache.ignite.configuration.DataStorageConfiguration;
 import org.apache.ignite.configuration.IgniteConfiguration;
+import org.apache.ignite.kubernetes.configuration.KubernetesConnectionConfiguration;
 import org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder;
@@ -31,6 +32,10 @@ public class IgniteConfig {
 
     @Value("${ignite.kubernetes.enabled:false}")
     private Boolean k8sEnabled;
+
+    private String k8sApiServer = "https://kubernetes.docker.internal:6443";
+    private String k8sServiceName = "project04";
+    private String k8sNameSpace = "default";
 
     @Bean(name = "igniteInstance")
     public Ignite igniteInstance() {
@@ -102,7 +107,11 @@ public class IgniteConfig {
 
     private TcpDiscoverySpi tcpDiscoverySpiKubernetes() {
         TcpDiscoverySpi spi = new TcpDiscoverySpi();
-        TcpDiscoveryKubernetesIpFinder ipFinder = new TcpDiscoveryKubernetesIpFinder();
+        KubernetesConnectionConfiguration kcfg = new KubernetesConnectionConfiguration();
+        kcfg.setNamespace(k8sNameSpace);
+        kcfg.setMasterUrl(k8sApiServer);
+        TcpDiscoveryKubernetesIpFinder ipFinder = new TcpDiscoveryKubernetesIpFinder(kcfg);
+        ipFinder.setServiceName(k8sServiceName);
         spi.setIpFinder(ipFinder);
         return spi;
     }

@@ -104,6 +104,91 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "K8S endpoints",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{K8S_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://kubernetes.docker.internal:6443/api/v1/namespaces/default/endpoints/project04",
+					"protocol": "https",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"port": "6443",
+					"path": [
+						"api",
+						"v1",
+						"namespaces",
+						"default",
+						"endpoints",
+						"project04"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run Job - k8s Pod",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/run-job/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"run-job",
+						"20"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "K8S_TOKEN",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
